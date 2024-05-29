@@ -1,4 +1,4 @@
-const html = document.getElementById('html');
+const htmlHome = document.getElementById('html');
 
 const focoBt = document.getElementById('botaoFoco');
 const curtoBt = document.getElementById('botaoCurto');
@@ -63,7 +63,7 @@ function alterarContexto(contexto) {
     botoes.forEach(function (contexto) {
         contexto.classList.remove('active');
     })
-    html.setAttribute('data-contexto', contexto);
+    htmlHome.setAttribute('data-contexto', contexto);
     banner.setAttribute('src', `/imagens/${contexto}.png`)
     switch (contexto) {
         case "foco":
@@ -88,6 +88,11 @@ const contagem = () => {
     if (tempoDecorrido <= 0) {
         musicaAcabou.play();
         alert('Tempo finalizado')
+        const focoAtivo = htmlHome.getAttribute('data-contexto') == 'foco'
+        if (focoAtivo) {
+            const evento = new CustomEvent('FocoFinalizado')
+            document.dispatchEvent(evento);
+        }
         zerar()
         return
     }
